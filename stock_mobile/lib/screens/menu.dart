@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:stock_mobile/widgets/left_drawer.dart';
+import 'package:stock_mobile/widgets/shop_card.dart';
+import 'package:stock_mobile/screens/shoplist_form.dart';
 
 class MyHomePage extends StatelessWidget {
     MyHomePage({Key? key}) : super(key: key);
   final List<ShopItem> items = [
-    ShopItem("Lihat Item", Icons.checklist, Colors.lightBlue),
-    ShopItem("Tambah Item", Icons.add_shopping_cart, Colors.lightGreen),
-    ShopItem("Logout", Icons.logout, Colors.lime),
+    ShopItem("Lihat Produk", Icons.checklist, Color.fromARGB(255, 67, 12, 91)),
+    ShopItem("Tambah Produk", Icons.add_shopping_cart, Color.fromARGB(255, 97, 17, 132)),
+    ShopItem("Logout", Icons.logout, Color.fromARGB(255, 146, 33, 194)),
 ];
     @override
     Widget build(BuildContext context) {
       return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Stock Mobile',
+          'Toko Berkah Jaya Abadi',
           style: TextStyle(
             color: Colors.white,
           ),
         ),
         backgroundColor: Colors.indigo,
+        foregroundColor: Colors.white,
       ),
+      drawer: const LeftDrawer(),
       body: SingleChildScrollView(
         // Widget wrapper yang dapat discroll
         child: Padding(
@@ -30,9 +35,10 @@ class MyHomePage extends StatelessWidget {
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                 // Widget Text untuk menampilkan tulisan dengan alignment center dan style yang sesuai
                 child: Text(
-                  'Toko Berkah Jaya Abadi', // Text yang menandakan toko
+                  'Berkah Shop', // Text yang menandakan toko
                   textAlign: TextAlign.center,
                   style: TextStyle(
+                    color: Colors. black,
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                   ),
@@ -60,13 +66,6 @@ class MyHomePage extends StatelessWidget {
     }
 }
 
-class ShopItem {
-  final String name;
-  final IconData icon;
-  final Color color;
-
-  ShopItem(this.name, this.icon, this.color);
-}
 
 class ShopCard extends StatelessWidget {
   final ShopItem item;
@@ -85,6 +84,14 @@ class ShopCard extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
                 content: Text("Kamu telah menekan tombol ${item.name}!")));
+             // Navigate ke route yang sesuai (tergantung jenis tombol)
+            if (item.name == "Tambah Produk") {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ShopFormPage(),
+                  ));
+            }
         },
         child: Container(
           // Container untuk menyimpan Icon dan Text
